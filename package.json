@@ -1,6 +1,7 @@
 {
     "name": "group-video-final",
     "version": "1.0.0",
+    "description": "Webrtc project in MERN",
     "main": "index.js",
     "license": "MIT",
     "dependencies": {
