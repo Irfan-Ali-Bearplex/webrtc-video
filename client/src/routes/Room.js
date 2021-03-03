@@ -3,8 +3,8 @@ import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import styled from 'styled-components';
 
-// const ENDPOINT = 'http://localhost:5200/';
-// let socket;
+const ENDPOINT = 'http://localhost:5200/';
+let socket;
 
 const StyledVideo = styled.video`
 	height: 40%;
@@ -37,6 +37,7 @@ const Room = (props) => {
 	const roomID = props.match.params.roomID;
 
 	useEffect(() => {
+		// socket = io.connect(ENDPOINT);
 		let checkRole = props.location.search.slice(6, 11);
 		setRole(checkRole);
 		socketRef.current = io.connect('/');
@@ -49,9 +50,11 @@ const Room = (props) => {
 			.then((stream) => {
 				if (checkRole == 'admin') {
 					userVideo.current.srcObject = stream;
+					console.log('Admin');
 				}
 				socketRef.current.emit('join room', { roomID, checkRole });
 				socketRef.current.on('all users', (users) => {
+					console.log('Users');
 					const peers = [];
 					users.forEach((user) => {
 						const peer = user.role
